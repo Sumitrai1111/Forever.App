@@ -38,7 +38,31 @@ const Verify = () => {
     verifyPayment();
   }, [token]);
 
-  return;
+  return (
+    <div style={{ minHeight: "60vh", display: "grid" }}>
+      <style>
+        {`
+      @keyframes rotate {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    `}
+      </style>
+
+      <div
+        style={{
+          width: "100px",
+          height: "100px",
+          placeSelf: "center",
+          border: "5px solid #bdbdbd",
+          borderTopColor: "tomato",
+          borderRadius: "50%",
+          animation: "rotate 1s linear infinite",
+        }}
+      ></div>
+    </div>
+  );
 };
 
 export default Verify;

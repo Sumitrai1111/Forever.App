@@ -106,7 +106,7 @@ const placeOrderStripe = async (req, res) => {
 };
 
 //Verify Stripe
-const verifyStripe = async () => {
+const verifyStripe = async (req, res) => {
   try {
     const { orderId, success, userId } = req.body;
     if (success === "true") {
@@ -114,11 +114,13 @@ const verifyStripe = async () => {
       await userModel.findByIdAndUpdate(userId, { cartData: {} });
       return res.status(201).json({
         success: true,
+        message: "Paid",
       });
     } else {
       await orderModel.findByIdAndDelete(orderId);
       return res.status(201).json({
         success: false,
+        message: "Not Paid",
       });
     }
   } catch (error) {

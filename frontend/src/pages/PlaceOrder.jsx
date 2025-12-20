@@ -115,7 +115,8 @@ const PlaceOrder = () => {
           console.log(responseStripe.data);
           if (responseStripe.data.success) {
             const { session_url } = responseStripe.data;
-            window.location.replace(session_url);
+            window.location.href = session_url;
+            // window.location.replace(session_url);
           } else {
             toast.error(responseStripe.data.message);
           }
