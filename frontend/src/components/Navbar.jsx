@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
+
   const {
     setShowSearch,
     getCartCount,
@@ -62,25 +64,46 @@ const Navbar = () => {
           className="w-5 cursor-pointer"
           alt="search-icon"
         />
-        <div className="group relative">
+        <div
+          className="relative"
+          onMouseEnter={() => window.innerWidth >= 768 && setOpen(true)}
+          onMouseLeave={() => window.innerWidth >= 768 && setOpen(false)}
+        >
           <img
-            onClick={() => (token ? null : navigate("/login"))}
             src={assets.profile_icon}
             className="w-5 cursor-pointer"
             alt="profile-icon"
+            onClick={() => {
+              if (!token) {
+                navigate("/login");
+              } else {
+                setOpen(!open);
+              }
+            }}
           />
-          {/*Dropdown Menu */}
-          {token && (
-            <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
-              <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded">
+
+          {token && open && (
+            <div className="absolute right-0 pt-4 z-50">
+              <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded shadow-lg">
                 <p className="cursor-pointer hover:text-black">My Profile</p>
+
                 <p
-                  onClick={() => navigate("/orders")}
+                  onClick={() => {
+                    navigate("/orders");
+                    setOpen(false);
+                  }}
                   className="cursor-pointer hover:text-black"
                 >
                   Orders
                 </p>
-                <p onClick={logout} className="cursor-pointer hover:text-black">
+
+                <p
+                  onClick={() => {
+                    logout();
+                    setOpen(false);
+                  }}
+                  className="cursor-pointer hover:text-black"
+                >
                   Logout
                 </p>
               </div>
